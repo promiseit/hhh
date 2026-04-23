@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手机模拟器 - 敞开心扉工具</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        .phone-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .phone-btn {
+            padding: 10px 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .phone-btn:hover, .phone-btn.active {
+            background: white;
+            color: #667eea;
+            border-color: white;
+        }
+        
+        .phone-frame {
+            background: #1a1a2e;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            transition: all 0.5s ease;
+        }
+        
+        .phone-frame.iphone-se {
+            width: 375px;
+            height: 667px;
+        }
+        
+        .phone-frame.iphone-12 {
+            width: 390px;
+            height: 844px;
+        }
+        
+        .phone-frame.iphone-pro-max {
+            width: 428px;
+            height: 926px;
+        }
+        
+        .phone-frame.android {
+            width: 360px;
+            height: 780px;
+        }
+        
+        .phone-frame.huawei-mate60 {
+            width: 384px;
+            height: 832px;
+        }
+        
+        .phone-frame.huawei-mate60 .phone-notch {
+            width: 80px;
+            height: 25px;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .phone-screen iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .phone-notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 30px;
+            background: #1a1a2e;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+        
+        .phone-home-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 134px;
+            height: 5px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+        }
+        
+        .device-label {
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .rotate-btn {
+            margin-top: 15px;
+            padding: 10px 25px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .rotate-btn:hover {
+            background: white;
+            color: #667eea;
+        }
+        
+        .phone-frame.landscape {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body>
+    <h1>📱 手机模拟器 - 敞开心扉工具</h1>
+    
+    <div class="phone-selector">
+        <button class="phone-btn active" data-model="huawei-mate60">华为 Mate 60 (384×832)</button>
+        <button class="phone-btn" data-model="iphone-se">iPhone SE (375×667)</button>
+        <button class="phone-btn" data-model="iphone-12">iPhone 12 (390×844)</button>
+        <button class="phone-btn" data-model="iphone-pro-max">iPhone Pro Max (428×926)</button>
+        <button class="phone-btn" data-model="android">Android (360×780)</button>
+    </div>
+    
+    <div class="phone-frame huawei-mate60" id="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+            <iframe src="autism-work-tool-improved.html" id="phone-iframe"></iframe>
+        </div>
+        <div class="phone-home-indicator"></div>
+    </div>
+    
+    <div class="device-label" id="device-label">华为 Mate 60 - 竖屏模式 (384×832)</div>
+    
+    <button class="rotate-btn" id="rotate-btn">🔄 切换横屏/竖屏</button>
+    
+    <script>
+        const phoneFrame = document.getElementById('phone-frame');
+        const deviceLabel = document.getElementById('device-label');
+        const rotateBtn = document.getElementById('rotate-btn');
+        let isLandscape = false;
+        
+        const models = {
+            'huawei-mate60': { name: '华为 Mate 60', width: 384, height: 832 },
+            'iphone-se': { name: 'iPhone SE', width: 375, height: 667 },
+            'iphone-12': { name: 'iPhone 12', width: 390, height: 844 },
+            'iphone-pro-max': { name: 'iPhone Pro Max', width: 428, height: 926 },
+            'android': { name: 'Android', width: 360, height: 780 }
+        };
+        
+        let currentModel = 'huawei-mate60';
+        
+        document.querySelectorAll('.phone-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.phone-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                currentModel = this.dataset.model;
+                const model = models[currentModel];
+                
+                phoneFrame.className = `phone-frame ${currentModel}${isLandscape ? ' landscape' : ''}`;
+                updateLabel();
+            });
+        });
+        
+        rotateBtn.addEventListener('click', function() {
+            isLandscape = !isLandscape;
+            phoneFrame.classList.toggle('landscape');
+            updateLabel();
+        });
+        
+        function updateLabel() {
+            const model = models[currentModel];
+            if (isLandscape) {
+                deviceLabel.textContent = `${model.name} - 横屏模式 (${model.height}×${model.width})`;
+            } else {
+                deviceLabel.textContent = `${model.name} - 竖屏模式 (${model.width}×${model.height})`;
+            }
+        }
+    </script>
+</body>
+</html>

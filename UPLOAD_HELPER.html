@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub 上传助手 - 自闭症工作融入工具</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .code {
+            background: #2d3748;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            overflow-x: auto;
+        }
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .file-list {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .file-item {
+            padding: 8px 15px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-file {
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 GitHub 上传助手</h1>
+        <p>自闭症工作融入工具准备上传到 https://github.com/promiseit/hhh</p>
+        
+        <div class="step">
+            <h2>📁 步骤 1: 创建 GitHub 仓库</h2>
+            <a href="https://github.com/new" class="button" target="_blank">创建新仓库</a>
+            <p>仓库名称填写: <strong>hhh</strong></p>
+        </div>
+        
+        <div class="step">
+            <h2>📤 步骤 2: 上传文件</h2>
+            <a href="https://github.com/promiseit/hhh/upload/main" class="button" target="_blank">打开上传页面</a>
+            <p>拖拽并上传下面目录的所有文件：</p>
+            <div class="code">/workspace/autism_tool_repo/</div>
+        </div>
+        
+        <div class="file-list">
+            <h3>📋 准备上传的文件：</h3>
+            <div class="file-item main-file">autism-work-tool-improved.html - 主要应用</div>
+            <div class="file-item">autism-work-tool-prototype.html</div>
+            <div class="file-item">browser_test.js</div>
+            <div class="file-item">functional_test.js</div>
+            <div class="file-item">test-runner.html</div>
+            <div class="file-item">phone-emulator.html</div>
+            <div class="file-item">test_all_modules.py</div>
+            <div class="file-item">... 以及更多测试和工具文件</div>
+        </div>
+        
+        <div class="step">
+            <h2>🖥️ 命令行方式 (高级)</h2>
+            <div class="code">cd /workspace/autism_tool_repo
+# 创建 Personal Access Token 后运行:
+git push https://&lt;YOUR_TOKEN&gt;@github.com/promiseit/hhh main</div>
+        </div>
+        
+        <div class="step">
+            <h2>💡 提示</h2>
+            <p>如果您有 GitHub Personal Access Token，可以使用上面的命令行方式，否则使用网页上传最方便！</p>
+        </div>
+    </div>
+</body>
+</html>
